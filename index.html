@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>InfluxDB</title>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="shower/themes/ribbon/styles/screen-16x10.css">
+</head>
+<body class="shower list">
+	<header class="caption">
+		<h1>InfluxDB</h1>
+		<p>Rafael Andrade de Oliveira</p>
+	</header>
+	<section class="slide" id="cover">
+		<img src="pictures/background__default.jpg" alt="" class="cover">
+		<img src="pictures/influxdb.png" alt="" style="margin-top: 100px">
+		<style>
+			#cover {
+				text-align: center;
+				}
+		</style>
+	</section>
+	<section class="slide" id="intro">
+		<h2>InfluxDB</h2>
+		<p>A promising open-source, distributed, <strong>time-series database*</strong> <br/>
+			useful for recording metrics, events and performing analytics.<br/>
+			Based on LevelDB, written by Google.</p>
+		<p class="note">* Designed to address the problem of storing data resulting from<br/>
+			successive measurements made over a period of time.</p>
+		<style>
+			#intro h2, #intro h3 {
+				text-align:center;
+				}
+			#intro h2 {
+				font-size:70px;
+				}
+			#intro p {
+				margin:50px 0 0 0;
+				text-align:center;
+				}
+		</style>
+	</section>
+	<section class="slide">
+		<h2>Use cases and benefits</h2>
+		<ol>
+			<li>IoT and sensor data</li>
+			<li>Successive metrics</li>
+			<li>Real-time monitoring</li>
+			<li>Historical analysis</li>
+			<li>Implementation speed detection</li>
+		</ol>
+	</section>
+	<section class="slide">
+		<h2>Features</h2>
+		<ol>
+			<li>Fast</li>
+			<li>Key-value pairs data model</li>
+			<li>Schemaless, tags</li>
+			<li>Built-in HTTP API</li>
+			<li>InfluxQL</li>
+		</ol>
+	</section>
+	<section class="slide">
+		<h2>Pros</h2>
+		<ol>
+			<li>Real-time</li>
+			<li>Data-type rejection</li>
+			<li>Evolution cadence</li>
+			<li>Cluster (alpha)</li>
+		</ol>
+	</section>
+	<section class="slide">
+		<h2>Setup</h2>
+		<ol>
+			<li>Easy installation</li>
+			<li>No external dependencies</li>
+			<li>Configuration file</li>
+			<li>Hardware recommendation
+				<ul>
+					<li>2 SSD volumes</li>
+					<li>8G RAM each machine</li>
+					<li>Best performance using C3 class of machines</li>
+				</ul>
+			</li>
+		</ol>
+	</section>
+	<section class="slide">
+		<h2>Networking</h2>
+		<ol>
+			<li>Admin Panel (port 8083)</li>
+			<li>Client/server communication (port 8086)</li>
+			<li>Clustered instances (ports 8088 and 8091)</li>
+		</ol>
+	</section>
+	<section class="slide">
+		<h2>Admin Panel</h2>
+		<img src="pictures/admin.png" alt="" height="450px">
+	</section>
+	<section class="slide">
+		<h2>CLI</h2>
+		<pre>
+			# influx<br/>
+			Connected to http://localhost:8086 version 0.10.2<br/>
+			InfluxDB shell 0.10.2<br/>
+			> CREATE DATABASE db1<br/>
+			> USE db1<br/>
+			Using database db1<br/>
+		</pre>
+	</section>
+	<section class="slide">
+		<h2>Data Model</h2>
+		<pre>
+			> INSERT <mark class="comment">cpu_load_short</mark>,host=server01,region=us-west <mark class="mark">value=0.64</mark> <mark class="important">1434055562000000000</mark>
+		</pre>
+		<ol>
+			<li><strong>Measure</strong>: cpu_load_short</li>
+			<li><strong>Tags</strong>: host and region</li>
+			<li><strong>Field value</strong>: value=0.64</li>
+			<li><strong>Timestamp</strong>: 1434055562000000000</li>
+		</ol>
+	</section>
+	<section class="slide" id="httpapi">
+		<h2>HTTP API</h2>
+		<pre>
+			# curl -G 'http://localhost:8086/query?pretty=true' --data-urlencode "db=db1"<br/>
+				--data-urlencode 
+				"q=SELECT value FROM cpu_load_short WHERE region='us-west'"<br/>
+		</pre>
+		<pre>
+			<code>{</code>
+			<code>    "results": [</code>
+			<code>        {</code>
+			<code>            "series": [</code>
+			<code>                {</code>
+			<code>                    "name": "cpu_load_short",</code>
+			<code>                    "columns": [</code>
+			<code>                        "time",</code>
+			<code>                        "value"</code>
+			<code>                    ],</code>
+			<code>                    "values": [</code>
+			<code>                        [</code>
+			<code>                            "2015-06-11T20:46:02Z",</code>
+			<code>                            0.64</code>
+			<code>                        ]</code>
+			<code>                    ]</code>
+			<code>                }</code>
+			<code>            ]</code>
+			<code>        }</code>
+			<code>    ]</code>
+			<code>}</code>
+		</pre>
+		<style type="text/css">
+		#httpapi {
+			font-size: 20px;
+		}
+		#httpapi code {
+			font-size: 14px;
+			line-height: 16px;
+		}
+		</style>
+	</section>
+	<section class="slide" id="influxdatatitle">
+		<img src="pictures/influxdata.jpg" alt="">
+		<style type="text/css">
+			#influxdatatitle {
+				background:#575e6b;
+				text-align: center;
+			}
+			#influxdatatitle img {
+				margin: 50px 0 0;
+				width: 500px;
+			}
+		</style>
+	</section>
+	<section class="slide" id="influxdata">
+		<h2>InfluxData</h2>
+		<p>The platform for collecting, storing and visualizing time-series data.</p>
+		<img src="pictures/TICK-Stack.png" alt="">
+		<style>
+			#influxdata {
+				text-align:center;
+			}
+			#influxdata img {
+				height: 300px;
+			}
+		</style>
+	</section>
+	<section class="slide" id="influxdatastack">
+		<h2>TICK Stack</h2>
+		<img src="pictures/tick-stack-grid.jpg" alt="">
+		<style>
+			#influxdatastack {
+				text-align:center;
+				}
+			#influxdatastack img {
+				height: 300px;
+				}
+		</style>
+	</section>
+	<section class="slide" id="chronograf">
+		<h2>Chronograf</h2>
+		<p>Dashboard example:</p>
+		<img src="pictures/sample-dashboard-010.png" alt="">
+		<style>
+			#chronograf {
+				text-align:center;
+			}
+			#chronograf img {
+				height: 300px;
+			}
+		</style>
+	</section>
+	<section class="slide" id="grafana">
+		<h2>Alternative: Grafana</h2>
+		<p>Dashboard example:</p>
+		<img src="pictures/grafanadashboard.png" alt="">
+		<style>
+			#grafana {
+				text-align:center;
+			}
+			#grafana img {
+				height: 300px;
+			}
+		</style>
+	</section>
+	<section class="slide">
+		<h2>Two columns if you like</h2>
+		<p class="double">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
+	</section>
+	<section class="slide">
+		<h2>Serious citations</h2>
+		<figure>
+			<blockquote>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.</p>
+			</blockquote>
+			<figcaption>Marcus Tullius Cicero</figcaption>
+		</figure>
+	</section>
+	<section class="slide grid">
+		<h2>Reference</h2>
+		<ul>
+			<li>https://docs.influxdata.com/influxdb/v0.10/introduction/getting_started/</li>
+			<li>http://docs.grafana.org/datasources/influxdb/</li>
+			<li>https://www.digitalocean.com/community/tutorials/how-to-analyze-system-metrics-with-influxdb-on-centos-7</li>
+		</ul>
+	</section>
+	<section class="slide">
+		<h2 class="shout shrink">Questions?</h2>
+	</section>
+	<div class="progress"></div>
+	<script src="shower/shower.min.js"></script>
+</body>
+</html>
